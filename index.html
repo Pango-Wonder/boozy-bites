@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boozy Bites | Ice cream with a kick</title>
+  <meta name="description" content="Boozy Bites makes flavor-first, alcohol-infused mini ice cream cups for sharing. 21+ only." />
+  <style>
+    :root {
+      --teal: #55bfd0;
+      --teal-dark: #1595a9;
+      --cream: #fffaf0;
+      --ink: #17344a;
+      --muted: #607486;
+      --coral: #ef6d71;
+      --yellow: #f6c85f;
+      --line: #d9e9eb;
+      --shadow: 0 18px 45px rgba(23,52,74,.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--cream); }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .topbar { background: var(--ink); color: #fff; text-align: center; padding: 9px 16px; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+    .nav { max-width: 1180px; margin: auto; display:flex; justify-content:space-between; align-items:center; padding: 22px 24px; }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); font-weight:950; font-size:1.35rem; letter-spacing:-.06em; }
+    .brand-mark { width:38px; height:38px; border-radius: 50% 50% 48% 48%; background:var(--teal); display:grid; place-items:center; color:#fff; font-size:1.25rem; box-shadow:inset 0 -4px 0 rgba(0,0,0,.08); }
+    .nav-links { display:flex; gap:28px; align-items:center; }
+    .nav-links a { color:var(--ink); text-decoration:none; font-size:.92rem; font-weight:700; }
+    .cart-btn { border:0; background:var(--teal); color:#fff; border-radius:999px; padding:11px 16px; font-weight:800; display:flex; gap:9px; align-items:center; }
+    .cart-count { background:#fff; color:var(--teal-dark); border-radius:50%; width:20px; height:20px; display:grid; place-items:center; font-size:.72rem; }
+    .hero { background:var(--teal); min-height:580px; overflow:hidden; position:relative; }
+    .hero:before, .scallop:before { content:""; position:absolute; top:0; left:0; right:0; height:26px; background:linear-gradient(var(--cream) 0 12px, transparent 12px), radial-gradient(circle at 12px 12px, var(--cream) 12px, transparent 13px) 0 0/24px 24px repeat-x; }
+    .hero-inner { max-width:1180px; margin:auto; padding:100px 24px 86px; display:grid; grid-template-columns: 1fr 1fr; gap:55px; align-items:center; position:relative; z-index:1; }
+    .eyebrow { color:var(--teal-dark); font-weight:900; letter-spacing:.13em; text-transform:uppercase; font-size:.76rem; }
+    .hero .eyebrow { color:#e2fbff; }
+    h1 { font-size:clamp(3.7rem, 8vw, 7rem); line-height:.82; letter-spacing:-.09em; margin:16px 0 25px; max-width:650px; }
+    .hero h1 { color:#fff; }
+    .hero-copy { color:#e7fbfd; font-size:1.13rem; line-height:1.65; max-width:510px; }
+    .cta-row { display:flex; gap:12px; align-items:center; margin-top:32px; flex-wrap:wrap; }
+    .primary, .secondary { border:0; border-radius:999px; padding:15px 23px; font-weight:900; text-decoration:none; display:inline-block; }
+    .primary { background:var(--ink); color:#fff; }
+    .secondary { background:#fff; color:var(--ink); }
+    .hero-art { position:relative; height:370px; display:grid; place-items:center; }
+    .hero-art:after { content:""; position:absolute; width:290px; height:35px; border-radius:50%; background:rgba(0,75,91,.22); left:50%; bottom:18px; transform:translateX(-50%); filter:blur(5px); }
+    .cup { position:absolute; width:155px; height:165px; border-radius:14px 14px 35px 35px; background:var(--cream); box-shadow:0 16px 30px rgba(0,50,70,.2); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-weight:950; color:var(--ink); z-index:2; }
+    .cup:before { content:""; position:absolute; top:-14px; width:145px; height:38px; border-radius:50%; background:#fefdf9; box-shadow:inset 0 -8px 0 rgba(0,0,0,.04); }
+    .cup small { font-size:.47rem; letter-spacing:.12em; text-transform:uppercase; margin-top:16px; }
+    .cup strong { font-size:1.15rem; line-height:.9; letter-spacing:-.06em; margin-top:8px; }
+    .cup span { color:var(--coral); font-size:.65rem; margin-top:8px; }
+    .cup.one { left:8%; top:82px; transform:rotate(-13deg); background:#ffd9a4; }
+    .cup.two { left:35%; top:26px; transform:rotate(4deg); background:#f8c8d0; z-index:3; }
+    .cup.three { right:6%; top:92px; transform:rotate(13deg); background:#d7e4a7; }
+    .hero-photo { width:min(100%, 560px); border-radius:28px; position:relative; z-index:2; filter:drop-shadow(0 20px 22px rgba(0,50,70,.23)); transform:rotate(2deg); }
+    .hero-badge { position:absolute; z-index:4; right:1%; bottom:25px; background:var(--cream); color:var(--teal-dark); border-radius:999px; padding:13px 17px; font-weight:950; font-size:.78rem; box-shadow:var(--shadow); transform:rotate(-5deg); }
+    .scoop { position:absolute; z-index:4; width:88px; height:55px; border-radius:55px 55px 22px 22px; top:-24px; background:#fff; box-shadow:inset 0 -8px rgba(0,0,0,.04); }
+    .product-section { max-width:1180px; margin:auto; padding:105px 24px 115px; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:32px; }
+    h2 { font-size:clamp(2.4rem, 5vw, 4rem); line-height:.95; letter-spacing:-.07em; margin:10px 0 0; }
+    .section-head p { max-width:390px; color:var(--muted); line-height:1.6; margin:0; }
+    .products { display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+    .product { background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden; transition:.25s ease; box-shadow:0 4px 0 rgba(23,52,74,.02); }
+    .product:hover { transform:translateY(-5px); box-shadow:var(--shadow); }
+    .product-image { height:215px; display:grid; place-items:center; position:relative; overflow:hidden; }
+    .product-image:after { content:""; position:absolute; width:150px; height:25px; bottom:23px; background:rgba(23,52,74,.14); filter:blur(8px); border-radius:50%; }
+    .mini-cup { width:115px; height:123px; border-radius:12px 12px 26px 26px; position:relative; z-index:1; display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; box-shadow:0 15px 20px rgba(23,52,74,.15); }
+    .mini-cup:before { content:""; position:absolute; top:-10px; width:105px; height:26px; background:#fff; border-radius:50%; }
+    .mini-cup span, .mini-cup b { position:relative; z-index:1; }
+    .mini-cup span { margin-top:14px; font-size:.43rem; letter-spacing:.08em; text-transform:uppercase; }
+    .mini-cup b { font-size:1rem; line-height:.88; letter-spacing:-.07em; max-width:78px; margin-top:7px; }
+    .package-photo { width:100%; height:100%; background-image:url('./assets/boozy-bites-packages.jpeg'); background-size:300% 200%; background-repeat:no-repeat; position:relative; z-index:1; }
+    .package-photo:after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 70%, rgba(23,52,74,.1)); }
+    .product-info { padding:20px 21px 22px; }
+    .product-info h3 { margin:0 0 8px; font-size:1.18rem; letter-spacing:-.04em; }
+    .product-info p { color:var(--muted); font-size:.88rem; line-height:1.45; min-height:42px; margin:0 0 16px; }
+    .product-row { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .price { font-size:1.18rem; font-weight:950; }
+    .add { background:var(--ink); color:#fff; border:0; border-radius:999px; padding:10px 14px; font-size:.8rem; font-weight:850; }
+    .flight-builder { background:var(--ink); color:#fff; border-radius:24px; padding:22px 24px; margin:0 0 30px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+    .flight-builder h3 { margin:0 0 5px; font-size:1.25rem; }
+    .flight-builder p { margin:0; color:#c9e0e6; font-size:.86rem; }
+    .flight-chips { display:flex; flex-wrap:wrap; gap:7px; margin-top:13px; }
+    .flight-chip { background:#fff; color:var(--ink); border-radius:999px; padding:6px 10px; font-size:.72rem; font-weight:800; }
+    .flight-action { display:flex; align-items:center; gap:13px; }
+    .flight-price { font-size:1.35rem; font-weight:950; white-space:nowrap; }
+    .flight-add { background:var(--teal); color:#fff; border:0; border-radius:999px; padding:13px 17px; font-weight:900; }
+    .flight-add:disabled { opacity:.45; cursor:not-allowed; }
+    .tag { position:absolute; top:16px; left:16px; background:#fff; color:var(--ink); border-radius:999px; padding:7px 10px; font-size:.65rem; font-weight:900; z-index:2; }
+    .story { background:#e6f6f7; position:relative; overflow:hidden; }
+    .story-inner { max-width:1180px; margin:auto; padding:100px 24px; display:grid; grid-template-columns:1fr 1fr; gap:75px; align-items:center; }
+    .story p { color:var(--muted); line-height:1.7; max-width:490px; }
+    .benefits { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:30px; }
+    .benefit { background:#fff; border-radius:18px; padding:18px; }
+    .benefit strong { display:block; font-size:.95rem; margin-bottom:6px; }
+    .benefit span { color:var(--muted); font-size:.76rem; line-height:1.4; display:block; }
+    .quote { background:var(--teal); color:#fff; padding:48px; border-radius:30px; transform:rotate(2deg); box-shadow:var(--shadow); }
+    .quote p { color:#fff; font-size:2rem; line-height:1.08; letter-spacing:-.05em; margin:0 0 25px; }
+    .quote small { color:#d9fbff; font-weight:800; }
+    .business { background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .business-inner { max-width:1180px; margin:auto; padding:95px 24px; display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; }
+    .business-copy p { color:var(--muted); line-height:1.65; max-width:470px; }
+    .business-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:28px; }
+    .business-list div { background:#e6f6f7; padding:14px 15px; border-radius:15px; font-weight:800; font-size:.86rem; }
+    .contact-form { background:var(--cream); border:1px solid var(--line); padding:25px; border-radius:24px; display:grid; gap:12px; }
+    .contact-form label { font-size:.75rem; font-weight:850; color:var(--ink); }
+    .contact-form input, .contact-form select, .contact-form textarea { width:100%; border:1px solid var(--line); border-radius:12px; background:#fff; padding:12px 13px; margin-top:6px; outline:none; color:var(--ink); }
+    .contact-form textarea { min-height:92px; resize:vertical; }
+    .contact-form .primary { border:0; }
+    .newsletter { max-width:1180px; margin:auto; padding:95px 24px; display:flex; justify-content:space-between; gap:30px; align-items:center; }
+    .poster-thumb { width:150px; aspect-ratio:4/5; object-fit:cover; object-position:center; border-radius:20px; box-shadow:var(--shadow); transform:rotate(-3deg); }
+    .newsletter p { color:var(--muted); margin:12px 0 0; }
+    .email-form { display:flex; gap:9px; min-width:min(100%, 430px); }
+    .email-form input { border:1px solid var(--line); background:#fff; border-radius:999px; padding:15px 18px; flex:1; outline:none; }
+    footer { background:var(--ink); color:#d5e6eb; padding:45px 24px; }
+    .footer-inner { max-width:1180px; margin:auto; display:flex; justify-content:space-between; gap:30px; align-items:center; }
+    footer .brand { color:#fff; }
+    .fine { font-size:.72rem; opacity:.72; }
+    .drawer-backdrop, .age-backdrop { position:fixed; inset:0; background:rgba(16,37,51,.5); z-index:20; opacity:0; pointer-events:none; transition:.25s; }
+    .drawer-backdrop.open, .age-backdrop.open { opacity:1; pointer-events:auto; }
+    .drawer { position:absolute; right:0; top:0; height:100%; width:min(430px,100%); background:var(--cream); padding:28px; transform:translateX(100%); transition:.25s; display:flex; flex-direction:column; }
+    .drawer-backdrop.open .drawer { transform:translateX(0); }
+    .drawer-head { display:flex; justify-content:space-between; align-items:center; }
+    .close { border:0; background:transparent; font-size:1.8rem; color:var(--ink); }
+    #cart-items { flex:1; overflow:auto; margin:22px 0; }
+    .cart-item { display:flex; justify-content:space-between; gap:14px; border-bottom:1px solid var(--line); padding:15px 0; }
+    .cart-item small { display:block; color:var(--muted); margin-top:5px; }
+    .qty { display:flex; align-items:center; gap:9px; }
+    .qty button { border:1px solid var(--line); background:#fff; border-radius:50%; width:25px; height:25px; }
+    .total { border-top:2px solid var(--ink); padding-top:17px; display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; }
+    .checkout { margin-top:15px; width:100%; }
+    .age-card { background:var(--cream); width:min(460px,calc(100% - 36px)); padding:40px; border-radius:25px; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); text-align:center; }
+    .age-card h2 { font-size:2.7rem; }
+    .age-card p { color:var(--muted); line-height:1.5; }
+    .age-actions { display:flex; gap:10px; justify-content:center; margin-top:22px; }
+    @media (max-width: 800px) { .nav-links a { display:none; } .hero-inner, .story-inner { grid-template-columns:1fr; } .hero { min-height:auto; } .hero-inner { padding-top:85px; } .hero-art { height:300px; margin-top:-10px; } .products { grid-template-columns:repeat(2,1fr); } .section-head, .newsletter, .footer-inner { flex-direction:column; align-items:flex-start; } .email-form { width:100%; } }
+    @media (max-width: 520px) { .products { grid-template-columns:1fr; } .benefits { grid-template-columns:1fr; } h1 { font-size:4.6rem; } .hero-art { transform:scale(.85); transform-origin:center top; margin-bottom:-45px; } .age-card { padding:28px 20px; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">21+ only · alcohol for flavor, not the buzz · California concept</div>
+  <header class="nav">
+    <a class="brand" href="#top"><span class="brand-mark">🍨</span>boozy bites</a>
+    <nav class="nav-links"><a href="#shop">Shop</a><a href="#story">Our story</a><a href="#business">For businesses</a><a href="#waitlist">Waitlist</a><button class="cart-btn" id="open-cart">Cart <span class="cart-count" id="cart-count">0</span></button></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Ice cream with a kick</div>
+          <h1>your new<br>nightcap.</h1>
+          <p class="hero-copy">Six tiny cups. Six cocktail-inspired flavors. One easy way to make the night a little sweeter.</p>
+          <div class="cta-row"><a class="primary" href="#shop">Shop the six-pack</a><a class="secondary" href="#story">Meet Boozy Bites</a></div>
+        </div>
+        <div class="hero-art" aria-label="Illustration of three Boozy Bites cups">
+          <img class="hero-photo" src="./assets/boozy-bites-lids.jpeg" alt="Six Boozy Bites ice cream flavor lids" />
+          <div class="hero-badge">Six flavors · one flight</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section" id="shop">
+      <div class="section-head"><div><div class="eyebrow">Meet the flight</div><h2>Pick your<br>perfect bite.</h2></div><p>Six cocktail-inspired mini cups made for sharing, sampling, and keeping the good times going. Every flavor is about 1–4% ABV.</p></div>
+      <div class="flight-builder"><div><h3>Build your own six-pack</h3><p><span id="flight-count">0</span> of 6 cups selected · Choose any combination of flavors</p><div class="flight-chips" id="flight-chips"><span style="color:#c9e0e6;font-size:.78rem">Your selected flavors will appear here.</span></div></div><div class="flight-action"><span class="flight-price">$21.99</span><button class="flight-add" id="add-flight" disabled>Add six-pack to cart</button></div></div>
+      <div class="products" id="products"></div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story-inner"><div><div class="eyebrow">Why Boozy Bites</div><h2>Small cup.<br>Big flavor.</h2><p>We made the dessert we wanted after a night out: fun, flavorful, and easy to share. Boozy Bites brings cocktail culture to the freezer aisle in six 3.6-oz cups.</p><div class="benefits"><div class="benefit"><strong>🍧 Mini portions</strong><span>Made for moderation and tasting the whole flight.</span></div><div class="benefit"><strong>🏠 At home</strong><span>A freezer-ready treat for hosting nights in.</span></div><div class="benefit"><strong>✨ Fresh flavors</strong><span>Seasonal swaps keep the six-pack exciting.</span></div></div></div><div class="quote"><p>“Alcohol for flavor, not the buzz.”</p><small>— The Boozy Bites promise · 21+ only</small></div></div>
+    </section>
+
+    <section class="business" id="business"><div class="business-inner"><div class="business-copy"><div class="eyebrow">Bring Boozy Bites to your freezer</div><h2>Stock the<br>good stuff.</h2><p>Are you a bar, bottle shop, specialty grocer, caterer, or event organizer? Tell us a little about your location and we’ll follow up with wholesale information, sampling options, and launch timing.</p><div class="business-list"><div>🍸 Bars & dining</div><div>🍾 Bottle shops</div><div>🛒 Specialty grocers</div><div>🎉 21+ events</div></div></div><form class="contact-form" id="business-form"><label>Business or organization<input id="business-name" required placeholder="Your business name"></label><label>Contact name<input id="contact-name" required placeholder="Your name"></label><label>Work email<input id="business-email" type="email" required placeholder="you@business.com"></label><label>Business type<select id="business-type" required><option value="">Select one</option><option>Bar or restaurant</option><option>Bottle shop or liquor retailer</option><option>Grocery or specialty market</option><option>Event organizer</option><option>Other</option></select></label><label>How can we help?<textarea id="business-message" placeholder="Tell us about your location, audience, or launch plans."></textarea></label><button class="primary" type="submit">Request wholesale information</button><div class="fine" id="business-status">We’ll only use this information to respond to your inquiry.</div></form></div></section>
+
+    <section class="newsletter" id="waitlist"><img class="poster-thumb" src="./assets/boozy-bites-poster.jpeg" alt="Boozy Bites coming soon to LA poster"><div><div class="eyebrow">First dibs taste better</div><h2>Join the waitlist.</h2><p>Be first to hear about drops, tastings, and local launch events.</p></div><form class="email-form" id="waitlist-form"><input type="email" id="email" placeholder="you@example.com" required><button class="primary" type="submit">Sign me up</button></form></section>
+  </main>
+  <footer><div class="footer-inner"><a class="brand" href="#top"><span class="brand-mark">🍨</span>boozy bites</a><div class="fine">© 2026 Boozy Bites · Mock storefront for project presentation · Please enjoy responsibly.</div><div class="fine">@eatboozybites</div></div></footer>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"><aside class="drawer"><div class="drawer-head"><h2 style="font-size:2.2rem">Your cart</h2><button class="close" id="close-cart" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="total"><span>Total</span><span id="cart-total">$0.00</span></div><button class="primary checkout" id="checkout">Checkout preview</button></aside></div>
+  <div class="age-backdrop open" id="age-backdrop"><div class="age-card"><div class="brand-mark" style="margin:auto">🍨</div><h2>Are you 21 or older?</h2><p>Boozy Bites contains alcohol. You must be 21+ to view this mock storefront.</p><div class="age-actions"><button class="primary" id="age-yes">Yes, let me in</button><button class="secondary" id="age-no">No thanks</button></div></div></div>
+
+  <script>
+    // Replace these values with your Supabase project's public URL and anon key
+    // when you are ready to persist waitlist signups and orders.
+    const SUPABASE_URL = '';
+    const SUPABASE_ANON_KEY = '';
+    const products = [
+      { id:'whiskey', name:'Whiskey Chocolate Chip', alcohol:'Whiskey', abv:'1.9% ABV', desc:'Rich chocolate ice cream with whiskey warmth and chocolate chips.', bg:'#ffdcae', label:'WHISKEY\nCHOCOLATE' },
+      { id:'pina', name:'Piña Colada Paradise', alcohol:'Malibu rum', abv:'1.2% ABV', desc:'Creamy coconut, bright pineapple, and a vacation state of mind.', bg:'#d8e9a6', label:'PIÑA COLADA' },
+      { id:'wine', name:'Wine & Berry', alcohol:'Red wine', abv:'3.7% ABV', desc:'Berry-forward ice cream with a smooth red-wine finish.', bg:'#e4a8ae', label:'WINE & BERRY' },
+      { id:'strawberry', name:'Strawberry Daiquiri', alcohol:'Rum', abv:'1.5% ABV', desc:'Strawberries, citrus, and a little rum in every spoonful.', bg:'#ffc6cf', label:'STRAWBERRY\nDAIQUIRI' },
+      { id:'espresso', name:'Espresso Martini', alcohol:'Vodka + Kahlúa', abv:'2.1% ABV', desc:'Coffee-shop energy with a silky, dark chocolate finish.', bg:'#c8b09c', label:'ESPRESSO\nMARTINI', tag:'NON-DAIRY' },
+      { id:'mango', name:'Mango Margarita', alcohol:'Tequila', abv:'1.7% ABV', desc:'Juicy mango, lime, and tequila for a bright tropical bite.', bg:'#ffc75d', label:'MANGO\nMARGARITA', tag:'NON-DAIRY' }
+    ];
+    let cart = JSON.parse(localStorage.getItem('boozy-bites-cart') || '[]');
+    const productsEl = document.getElementById('products');
+    const photoPositions = { whiskey:'0% 0%', wine:'50% 0%', pina:'100% 0%', strawberry:'0% 100%', mango:'50% 100%', espresso:'100% 100%' };
+    productsEl.innerHTML = products.map(p => `<article class="product"><div class="product-image" style="background:${p.bg}">${p.tag ? `<span class="tag">${p.tag}</span>` : ''}<div class="package-photo" style="background-position:${photoPositions[p.id]}"></div></div><div class="product-info"><h3>${p.name}</h3><p>${p.desc}</p><div class="product-row"><span class="price">Add to your flight</span><button class="add" data-id="${p.id}">Add flavor</button></div><div class="fine" style="margin-top:11px">${p.alcohol} · ${p.abv} · 3.6-oz cup</div></div></article>`).join('');
+    let flight = [];
+    function renderBuilder(){
+      document.getElementById('flight-count').textContent=flight.length;
+      document.getElementById('flight-chips').innerHTML=flight.length ? flight.map((id,index)=>{ const p=products.find(x=>x.id===id); return `<span class="flight-chip">${p.name} <button aria-label="Remove ${p.name}" data-remove-flight="${index}" style="border:0;background:transparent;color:var(--coral);font-weight:900;padding:0 0 0 4px">×</button></span>`; }).join('') : '<span style="color:#c9e0e6;font-size:.78rem">Your selected flavors will appear here.</span>';
+      document.getElementById('add-flight').disabled=flight.length!==6;
+    }
+    function saveCart(){ localStorage.setItem('boozy-bites-cart', JSON.stringify(cart)); renderCart(); }
+    function renderCart(){
+      const count = cart.reduce((a,i)=>a+i.qty,0); document.getElementById('cart-count').textContent=count;
+      const items = document.getElementById('cart-items');
+      if(!cart.length){ items.innerHTML='<p style="color:var(--muted);line-height:1.5">Your cart is empty. Add a six-pack to get the party started.</p>'; }
+      else items.innerHTML=cart.map(i=>`<div class="cart-item"><div><strong>${i.name}</strong><small>$${i.price.toFixed(2)} per six-pack</small>${i.flavors ? `<small>${i.flavors.map(id=>products.find(p=>p.id===id)?.name).join(', ')}</small>` : ''}</div><div class="qty"><button data-minus="${i.id}">−</button><span>${i.qty}</span><button data-plus="${i.id}">+</button></div></div>`).join('');
+      document.getElementById('cart-total').textContent='$'+cart.reduce((a,i)=>a+i.price*i.qty,0).toFixed(2);
+    }
+    function addFlight(){ cart.push({id:'flight-'+Date.now(),name:'Custom 6-Pack Flight',price:21.99,qty:1,flavors:[...flight]}); flight=[]; renderBuilder(); saveCart(); document.getElementById('drawer-backdrop').classList.add('open'); }
+    productsEl.addEventListener('click',e=>{ if(e.target.dataset.id){ if(flight.length<6){ flight.push(e.target.dataset.id); renderBuilder(); } else { alert('Your six-pack is full. Remove a flavor to make a change.'); } } });
+    document.getElementById('flight-chips').addEventListener('click',e=>{ if(e.target.dataset.removeFlight!==undefined){ flight.splice(Number(e.target.dataset.removeFlight),1); renderBuilder(); } });
+    document.getElementById('add-flight').onclick=addFlight;
+    document.getElementById('cart-items').addEventListener('click',e=>{ const id=e.target.dataset.plus||e.target.dataset.minus; if(!id)return; const i=cart.find(x=>x.id===id); e.target.dataset.plus ? i.qty++ : i.qty--; cart=cart.filter(x=>x.qty>0); saveCart(); });
+    document.getElementById('open-cart').onclick=()=>document.getElementById('drawer-backdrop').classList.add('open');
+    document.getElementById('close-cart').onclick=()=>document.getElementById('drawer-backdrop').classList.remove('open');
+    document.getElementById('drawer-backdrop').onclick=e=>{if(e.target.id==='drawer-backdrop')e.currentTarget.classList.remove('open')};
+    document.getElementById('checkout').onclick=()=>alert('Checkout preview: connect Stripe or your preferred payment provider when this project moves beyond the mock storefront.');
+    document.getElementById('age-yes').onclick=()=>{document.getElementById('age-backdrop').classList.remove('open'); localStorage.setItem('boozy-bites-age-confirmed','yes');};
+    document.getElementById('age-no').onclick=()=>{document.querySelector('.age-card').innerHTML='<h2>Come back when you are 21.</h2><p>Boozy Bites is an alcohol-infused product and is only for adults 21 and over.</p>';};
+    if(localStorage.getItem('boozy-bites-age-confirmed')) document.getElementById('age-backdrop').classList.remove('open');
+    document.getElementById('waitlist-form').onsubmit=async e=>{ e.preventDefault(); const email=document.getElementById('email').value; const button=e.target.querySelector('button'); button.textContent='You’re on the list!'; button.disabled=true; e.target.querySelector('input').value=''; if(SUPABASE_URL && SUPABASE_ANON_KEY){ try { await fetch(`${SUPABASE_URL}/rest/v1/waitlist`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({email})}); } catch(err){ console.warn('Supabase waitlist connection failed',err); } } };
+    document.getElementById('business-form').onsubmit=async e=>{ e.preventDefault(); const status=document.getElementById('business-status'); const button=e.target.querySelector('button'); const inquiry={business_name:document.getElementById('business-name').value,contact_name:document.getElementById('contact-name').value,email:document.getElementById('business-email').value,business_type:document.getElementById('business-type').value,message:document.getElementById('business-message').value}; button.textContent='Request received!'; button.disabled=true; status.textContent='Thanks! The Boozy Bites team will follow up soon.'; if(SUPABASE_URL && SUPABASE_ANON_KEY){ try { const response=await fetch(`${SUPABASE_URL}/rest/v1/business_inquiries`,{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(inquiry)}); if(!response.ok) throw new Error(await response.text()); } catch(err){ console.warn('Supabase business inquiry connection failed',err); status.textContent='The form is ready, but the business inquiry table still needs to be connected in Supabase.'; } } };
+    renderBuilder();
+    renderCart();
+  </script>
+</body>
+</html>
